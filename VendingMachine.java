@@ -38,14 +38,14 @@ public class VendingMachine {
     }
 
     public void buyProduct(Product p) {
-        if (p.getPrice() == currentCoins.getAmount()) {
+        if (p.getPrice() >= currentCoins.getAmount()) {
             p.setQuantity(p.getQuantity() - 1);
             currentCoins = new CoinSet();
             if (p.getQuantity() == 0) {
                 products.remove(p);
             }
         } else {
-            throw new VendingException("Insufficient funds");
+            throw new VendingException("Insufficient funds, please insert more money");
         }
     }
 
@@ -57,7 +57,7 @@ public class VendingMachine {
         StringBuilder str = new StringBuilder();
 
         for (Coin c : currentCoins.getSet()) {
-            str.append(c.getName() + ",");
+            str.append(c.getName() + ", ");
         }
         if (!str.isEmpty()) {
             str.delete(str.length() - 1, str.length() - 1);
